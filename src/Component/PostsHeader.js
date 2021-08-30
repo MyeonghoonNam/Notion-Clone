@@ -24,11 +24,10 @@ export default function PostsHeader({target, initialState}) {
     const createdPost = await request(`${this.state.button.link}`, {
       method: 'Post',
       body: JSON.stringify({
-        "title": '제목 없음',
+        "title": '',
         "parent": null
       })
     });
-    console.log(createdPost);
 
     route(`${this.state.button.link}/${createdPost.id}`);
   })
