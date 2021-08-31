@@ -20,11 +20,13 @@ export default function Postspage({target}) {
   const postList = new PostList({
     target: postsPage,
     initialState: [],
-    onRemove: async postId => {
-      await request(`/documents/${postId}`, {
-        method: 'DELETE'
-      });
-
+    onRemove: async postIdList => {
+      for(let postId of postIdList) {
+        await request(`/documents/${postId}`, {
+          method: 'DELETE'
+        });
+      }
+  
       route('/');
     },
     onAdd: async postId => {
@@ -36,14 +38,13 @@ export default function Postspage({target}) {
         }) 
       });
 
-      console.log(newPost);
       route(`/documents/${newPost.id}`);
     }
   });
 
   this.setState = async () => {
     const posts = await request('/documents');
-    
+
     postList.setState(posts);
     this.render();
   }

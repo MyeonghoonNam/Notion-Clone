@@ -23,7 +23,7 @@ export default function PostList({target, initialState, onRemove, onAdd}) {
 
       if(post) {
         if(className === 'page__button--delete') {
-          onRemove(postId);
+          onRemove(removePostId(post, postId));
         } else if(className === 'page__button--add') {
           onAdd(postId);
         } else {
@@ -46,6 +46,29 @@ export default function PostList({target, initialState, onRemove, onAdd}) {
         `).join('')}
       </ul>
     `
+  };
+
+  const removePostId = (post, postId) => {
+    const queue = [post];
+    const removePosts = [postId];
+
+    while(queue.length > 0) {
+      const root = queue.shift();
+
+      root.childNodes.forEach(el => {
+        if(el.nodeName === 'UL') {
+        
+          el.childNodes.forEach(list => {
+            if(list.nodeName === 'LI') {
+              queue.push(list);
+              removePosts.push(list.dataset.id);
+            }
+          });
+        }
+      })
+    }
+    
+    return removePosts;
   }
 
   this.render();
