@@ -26,6 +26,18 @@ export default function Postspage({target}) {
       });
 
       route('/');
+    },
+    onAdd: async postId => {
+      const newPost = await request('/documents', {
+        method: 'POST',
+        body: JSON.stringify({
+          "title": '',
+          "parent": postId
+        }) 
+      });
+
+      console.log(newPost);
+      route(`/documents/${newPost.id}`);
     }
   });
 
