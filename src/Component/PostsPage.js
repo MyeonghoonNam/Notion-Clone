@@ -1,6 +1,7 @@
 import PostsHeader from "./PostsHeader.js";
 import PostList from "./PostList.js";
 import { request } from "./api.js";
+import { route } from "./router.js";
 
 export default function Postspage({target}) {
   const postsPage = document.createElement('nav');
@@ -18,7 +19,14 @@ export default function Postspage({target}) {
 
   const postList = new PostList({
     target: postsPage,
-    initialState: []
+    initialState: [],
+    onRemove: async postId => {
+      await request(`/documents/${postId}`, {
+        method: 'DELETE'
+      });
+
+      route('/');
+    }
   });
 
   this.setState = async () => {
