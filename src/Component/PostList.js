@@ -1,6 +1,6 @@
 import { route } from "./router.js";
 
-export default function PostList({target, initialState, onRemove, onAdd}) {
+export default function PostList({target, initialState, onRemove, onAdd, onPostClick}) {
   const postList = document.createElement('div');
 
   target.appendChild(postList);
@@ -27,7 +27,7 @@ export default function PostList({target, initialState, onRemove, onAdd}) {
         } else if(className === 'page__button--add') {
           onAdd(postId);
         } else {
-          route(`/documents/${postId}`);
+          onPostClick(postId);
         }
       }
     })

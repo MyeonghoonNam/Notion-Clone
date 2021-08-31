@@ -39,6 +39,9 @@ export default function Postspage({target}) {
       });
 
       route(`/documents/${newPost.id}`);
+    },
+    onPostClick: (postId) => {
+      route(`/documents/${postId}`);
     }
   });
 
@@ -49,7 +52,7 @@ export default function Postspage({target}) {
     this.render();
   }
 
-  this.render = async () => {
+  this.render = () => {
     target.appendChild(postsPage);
   }
 }
