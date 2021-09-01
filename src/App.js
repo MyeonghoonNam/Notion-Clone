@@ -17,7 +17,7 @@ export default function App({target, initialState}) {
 
   this.state = initialState;
 
-  this.route = () => {
+  this.route = async () => {
     target.innerHTML = '';
     
     const {pathname} = location;
@@ -27,8 +27,8 @@ export default function App({target, initialState}) {
     } else if(pathname.indexOf('/documents/') === 0) {
       const [, , postId] = pathname.split('/');
 
-      postsPage.setState();
-      postEditPage.setState({postId});
+      await postsPage.setState();
+      await postEditPage.setState({postId});
     }
   }
 

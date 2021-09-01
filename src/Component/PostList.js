@@ -7,7 +7,7 @@ export default function PostList({target, initialState, onRemove, onAdd, onPostC
 
   this.setState = nextState => {
     this.state = nextState;
-    // console.log(this.state);
+    console.log(this.state);
     this.render();
   }
 
@@ -19,7 +19,7 @@ export default function PostList({target, initialState, onRemove, onAdd, onPostC
       const {className} = clickElement;
       const post = clickElement.closest('li');
       const postId = post.dataset.id;
-      
+
       if(post) {
         if(className === 'post__button--delete') {
           onRemove(postId);
@@ -44,7 +44,7 @@ export default function PostList({target, initialState, onRemove, onAdd, onPostC
             ${title ? title : '제목 없음'}
             <button class="post__button--delete">X</button>
             <button class="post__button--add">+</button>
-            ${isToggled ? documents.length ? createdPostList(documents) : '<ul><li>하위 페이지가 존재하지 않습니다.</li></ul>' : ''}
+            ${isToggled ? documents.length ? createdPostList(documents) : '<ul><li>하위 페이지가 없습니다.</li></ul>' : ''}
           </li>
         `).join('')}
       </ul>

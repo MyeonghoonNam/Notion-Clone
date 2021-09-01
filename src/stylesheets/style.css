@@ -1,0 +1,56 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+  padding: 0 15px;
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 20%;
+  padding: 1em;
+  background: #f5f4f1;
+}
+
+.content {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10%;
+}
+
+.editor {
+  width: 60%;
+}
+
+.editor__title {
+  width: 100%;
+  display: block;
+}
+
+.editor__content {
+  width: 100%;
+  height: 70%;
+}
+
+.post__button--toggle {
+  font-size: 24px;
+}
+
+.post__button--toggle:hover {
+  cursor:pointer;
+}

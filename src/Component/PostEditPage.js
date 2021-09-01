@@ -3,6 +3,7 @@ import Editor from "./Editor.js";
 
 export default function PostEditPage({target, initialState}) {
   const page = document.createElement('main');
+  page.setAttribute('class', 'content');
 
   let timer = null;
 

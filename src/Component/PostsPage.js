@@ -5,6 +5,7 @@ import { route } from "./router.js";
 
 export default function Postspage({target}) {
   const postsPage = document.createElement('nav');
+  postsPage.setAttribute('class', 'sidebar')
 
   new PostsHeader({
     target: postsPage,
