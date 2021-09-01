@@ -14,6 +14,17 @@ export default function Postspage({target}) {
         text: '+',
         link: '/documents'
       }
+    },
+    onClick: async () => {
+      const createdPost = await request('/documents', {
+        method: 'Post',
+        body: JSON.stringify({
+          "title": '',
+          "parent": null
+        })
+      });
+
+      route(`/documents/${createdPost.id}`);
     }
   });
 
