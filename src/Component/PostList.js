@@ -19,11 +19,11 @@ export default function PostList({target, initialState, onRemove, onAdd, onPostC
       const {className} = clickElement;
       const post = clickElement.closest('li');
       const postId = post.dataset.id;
-
+      
       if(post) {
-        if(className === 'page__button--delete') {
-          onRemove(removePostId(post, postId));
-        } else if(className === 'page__button--add') {
+        if(className === 'post__button--delete') {
+          onRemove(postId);
+        } else if(className === 'post__button--add') {
           onAdd(postId);
         } else if(className.includes("post__button--toggle")) {
           onToggle(postId);
@@ -51,28 +51,28 @@ export default function PostList({target, initialState, onRemove, onAdd, onPostC
     `
   };
 
-  const removePostId = (post, postId) => {
-    const queue = [post];
-    const removePosts = [postId];
+  // const removePostId = (post, postId) => {
+  //   const queue = [post];
+  //   const removePosts = [postId];
 
-    while(queue.length > 0) {
-      const root = queue.shift();
+  //   while(queue.length > 0) {
+  //     const root = queue.shift();
 
-      root.childNodes.forEach(el => {
-        if(el.nodeName === 'UL') {
+  //     root.childNodes.forEach(el => {
+  //       if(el.nodeName === 'UL') {
         
-          el.childNodes.forEach(list => {
-            if(list.nodeName === 'LI') {
-              queue.push(list);
-              removePosts.push(list.dataset.id);
-            }
-          });
-        }
-      })
-    }
+  //         el.childNodes.forEach(list => {
+  //           if(list.nodeName === 'LI') {
+  //             queue.push(list);
+  //             removePosts.push(list.dataset.id);
+  //           }
+  //         });
+  //       }
+  //     })
+  //   }
     
-    return removePosts;
-  }
+  //   return removePosts;
+  // }
 
   this.render();
 

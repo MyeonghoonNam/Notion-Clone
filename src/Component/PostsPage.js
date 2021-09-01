@@ -20,14 +20,63 @@ export default function Postspage({target}) {
   const postList = new PostList({
     target: postsPage,
     initialState: [],
-    onRemove: async postIdList => {
-      for(let postId of postIdList) {
-        await request(`/documents/${postId}`, {
-          method: 'DELETE'
-        });
+    onRemove: async postId => {
+      postId = Number(postId);
+      const nextState = [...postList.state];
+      
+      const findPost = () => {
+        const queue = nextState;
+
+        while(queue.length > 0) {
+          const curPost = queue.shift();
+
+          if(curPost.id === postId) {
+            return curPost;
+          }
+
+          curPost.documents.forEach(el => {
+            queue.push(el);
+          })
+        }
       }
+
+      const removePosts = async (root) => {
+        const queue = [root];
+        const removePostIds = [root.id];
+
+        while(queue.length > 0) {
+          const curPost = queue.shift();
+
+          if(curPost.documents.length === 0) continue;
+
+          curPost.documents.forEach(post => {
+            queue.push(post);
+            removePostIds.push(post.id);
+          });
+        }
+        
+        for(let id of removePostIds) {
+          await request(`/documents/${id}`, {
+            method: 'DELETE'
+          });
+        }
+      }
+
+      const removePostsRoot = findPost();
+
+      removePosts(removePostsRoot);
+      this.setState(nextState);
+      // route('/');
+      // console.log(nextState);
+      // route('/');
+      
+      // for(let postId of postIdList) {
+      //   await request(`/documents/${postId}`, {
+      //     method: 'DELETE'
+      //   });
+      // }
   
-      route('/');
+      // route('/');
     },
     onAdd: async postId => {
       const newPost = await request('/documents', {
@@ -45,7 +94,7 @@ export default function Postspage({target}) {
     },
     onToggle: postId => {
       postId = Number(postId);
-      
+
       const nextState = [...postList.state];
       const queue = [...nextState];
 
