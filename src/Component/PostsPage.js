@@ -42,11 +42,36 @@ export default function Postspage({target}) {
     },
     onPostClick: (postId) => {
       route(`/documents/${postId}`);
+    },
+    onToggle: postId => {
+      postId = Number(postId);
+      
+      const nextState = [...postList.state];
+      const queue = [...nextState];
+
+      while(queue.length > 0) {
+        const curPost = queue.shift();
+
+        if(curPost.id === postId) {
+          curPost.isToggled = !curPost.isToggled;
+          break;
+        }
+
+        curPost.documents.forEach(el => {
+          queue.push(el);
+        })
+      }
+
+      postList.setState(nextState);
     }
   });
 
   this.setState = async () => {
     const posts = await request('/documents');
+
+    posts.map(post => {
+      post.isToggled = false;
+    })
 
     postList.setState(posts);
     this.render();

@@ -1,6 +1,4 @@
-import { route } from "./router.js";
-
-export default function PostList({target, initialState, onRemove, onAdd, onPostClick}) {
+export default function PostList({target, initialState, onRemove, onAdd, onPostClick, onToggle}) {
   const postList = document.createElement('div');
 
   target.appendChild(postList);
@@ -9,6 +7,7 @@ export default function PostList({target, initialState, onRemove, onAdd, onPostC
 
   this.setState = nextState => {
     this.state = nextState;
+    // console.log(this.state);
     this.render();
   }
 
@@ -26,6 +25,8 @@ export default function PostList({target, initialState, onRemove, onAdd, onPostC
           onRemove(removePostId(post, postId));
         } else if(className === 'page__button--add') {
           onAdd(postId);
+        } else if(className.includes("post__button--toggle")) {
+          onToggle(postId);
         } else {
           onPostClick(postId);
         }
@@ -34,14 +35,16 @@ export default function PostList({target, initialState, onRemove, onAdd, onPostC
   }
 
   const createdPostList = (documents) => {
+
     return /* html */ `
       <ul>
-        ${documents.map(post => /* html */ `
-          <li class="" data-id="${post.id}">
-            ${post.title ? post.title : '제목 없음'}
-            <button class="page__button--delete">X</button>
-            <button class="page__button--add">+</button>
-            ${post.documents.length ? createdPostList(post.documents) : ''}
+        ${documents.map(({id, title, documents, isToggled}) => /* html */ `
+          <li class="post__row" data-id="${id}">
+            <i class="fas fa-caret-right post__button--toggle"></i>
+            ${title ? title : '제목 없음'}
+            <button class="post__button--delete">X</button>
+            <button class="post__button--add">+</button>
+            ${isToggled ? documents.length ? createdPostList(documents) : '<ul><li>하위 페이지가 존재하지 않습니다.</li></ul>' : ''}
           </li>
         `).join('')}
       </ul>
