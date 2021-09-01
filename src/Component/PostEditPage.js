@@ -2,7 +2,7 @@ import { request } from "./api.js";
 import Editor from "./Editor.js";
 
 export default function PostEditPage({target, initialState}) {
-  const page = document.createElement('section');
+  const page = document.createElement('main');
 
   let timer = null;
 
