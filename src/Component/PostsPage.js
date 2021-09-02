@@ -79,7 +79,9 @@ export default function Postspage({target}) {
       this.setState(nextState);
     },
     onAdd: async postId => {
-      const newPost = await request('/documents', {
+      const toggleIds = getItem('toggleIds', []);
+      
+      await request('/documents', {
         method: 'POST',
         body: JSON.stringify({
           "title": '',
@@ -87,7 +89,8 @@ export default function Postspage({target}) {
         }) 
       });
 
-      route(`/documents/${newPost.id}`);
+      setItem('toggleIds', [...toggleIds, postId]);
+      this.setState();
     },
     onPostClick: (postId) => {
       route(`/documents/${postId}`);
