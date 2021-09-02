@@ -2,6 +2,8 @@ import PostsHeader from "./PostsHeader.js";
 import PostList from "./PostList.js";
 import { request } from "./api.js";
 import { route } from "./router.js";
+import { setItem } from "./storage.js";
+import { getItem } from "./storage.js";
 
 export default function Postspage({target}) {
   const postsPage = document.createElement('nav');
@@ -10,11 +12,8 @@ export default function Postspage({target}) {
   new PostsHeader({
     target: postsPage,
     initialState: {
-      text: 'Page List',
-      button: {
-        text: '+',
-        link: '/documents'
-      }
+      headerText: 'Page List',
+      buttonText: '+'
     },
     onClick: async () => {
       const createdPost = await request('/documents', {
@@ -78,17 +77,6 @@ export default function Postspage({target}) {
 
       removePosts(removePostsRoot);
       this.setState(nextState);
-      // route('/');
-      // console.log(nextState);
-      // route('/');
-      
-      // for(let postId of postIdList) {
-      //   await request(`/documents/${postId}`, {
-      //     method: 'DELETE'
-      //   });
-      // }
-  
-      // route('/');
     },
     onAdd: async postId => {
       const newPost = await request('/documents', {
@@ -105,36 +93,31 @@ export default function Postspage({target}) {
       route(`/documents/${postId}`);
     },
     onToggle: postId => {
-      postId = Number(postId);
-
-      const nextState = [...postList.state];
-      const queue = [...nextState];
-
-      while(queue.length > 0) {
-        const curPost = queue.shift();
-
-        if(curPost.id === postId) {
-          curPost.isToggled = !curPost.isToggled;
-          break;
-        }
-
-        curPost.documents.forEach(el => {
-          queue.push(el);
-        })
+      const toggleIds = getItem('toggleIds', []);
+      const toggleIdx = toggleIds.findIndex(id => id === String(postId));
+      
+      if(toggleIdx === -1) {
+        setItem('toggleIds', [...toggleIds, postId]);
+      } else {
+        toggleIds.splice(toggleIdx, 1);
+        setItem('toggleIds', toggleIds);
       }
 
-      postList.setState(nextState);
+      postList.render();
     }
   });
 
   this.setState = async () => {
     const posts = await request('/documents');
-
-    posts.map(post => {
-      post.isToggled = false;
-    })
+    const toggleIds = getItem('toggleIds', []);
+    // posts.map(post => {
+    //   post.isToggled = false;
+    // })
+    setItem('posts', posts);
+    setItem('toggleIds', toggleIds);
 
     postList.setState(posts);
+
     this.render();
   }
 

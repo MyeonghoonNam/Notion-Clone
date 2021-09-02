@@ -1,3 +1,5 @@
+import { getItem } from "./storage.js";
+
 export default function PostList({target, initialState, onRemove, onAdd, onPostClick, onToggle}) {
   const postList = document.createElement('div');
 
@@ -6,8 +8,8 @@ export default function PostList({target, initialState, onRemove, onAdd, onPostC
   this.state = initialState;
 
   this.setState = nextState => {
+    console.log(nextState);
     this.state = nextState;
-    console.log(this.state);
     this.render();
   }
 
@@ -19,7 +21,7 @@ export default function PostList({target, initialState, onRemove, onAdd, onPostC
       const {className} = clickElement;
       const post = clickElement.closest('li');
       const postId = post.dataset.id;
-
+  
       if(post) {
         if(className === 'post__button--delete') {
           onRemove(postId);
@@ -31,49 +33,26 @@ export default function PostList({target, initialState, onRemove, onAdd, onPostC
           onPostClick(postId);
         }
       }
-    })
+    });
   }
 
   const createdPostList = (documents) => {
+    const toggleIds = getItem('toggleIds', []);
 
     return /* html */ `
       <ul>
-        ${documents.map(({id, title, documents, isToggled}) => /* html */ `
+        ${documents.map(({id, title, documents}) => /* html */ `
           <li class="post__row" data-id="${id}">
             <i class="fas fa-caret-right post__button--toggle"></i>
             ${title ? title : '제목 없음'}
             <button class="post__button--delete">X</button>
             <button class="post__button--add">+</button>
-            ${isToggled ? documents.length ? createdPostList(documents) : '<ul><li>하위 페이지가 없습니다.</li></ul>' : ''}
+            ${toggleIds.includes(String(id)) ? documents.length ? createdPostList(documents) : '<ul><li>하위 페이지가 없습니다.</li></ul>' : ''}
           </li>
         `).join('')}
       </ul>
     `
   };
-
-  // const removePostId = (post, postId) => {
-  //   const queue = [post];
-  //   const removePosts = [postId];
-
-  //   while(queue.length > 0) {
-  //     const root = queue.shift();
-
-  //     root.childNodes.forEach(el => {
-  //       if(el.nodeName === 'UL') {
-        
-  //         el.childNodes.forEach(list => {
-  //           if(list.nodeName === 'LI') {
-  //             queue.push(list);
-  //             removePosts.push(list.dataset.id);
-  //           }
-  //         });
-  //       }
-  //     })
-  //   }
-    
-  //   return removePosts;
-  // }
-
+  
   this.render();
-
 }
