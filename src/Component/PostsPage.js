@@ -5,7 +5,7 @@ import { route } from "./router.js";
 import { setItem } from "./storage.js";
 import { getItem } from "./storage.js";
 
-export default function Postspage({target}) {
+export default function Postspage({target, onEditor}) {
   const postsPage = document.createElement('nav');
   postsPage.setAttribute('class', 'sidebar')
 
@@ -93,7 +93,7 @@ export default function Postspage({target}) {
       this.setState();
     },
     onPostClick: (postId) => {
-      route(`/documents/${postId}`);
+      onEditor(postId);
     },
     onToggle: postId => {
       const toggleIds = getItem('toggleIds', []);

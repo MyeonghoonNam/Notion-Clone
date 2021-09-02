@@ -3,7 +3,14 @@ import PostEditPage from "./Component/PostEditPage.js";
 import { initRouter } from "./Component/router.js";
 
 export default function App({target, initialState}) {
-  const postsPage = new Postspage({target});
+  const postsPage = new Postspage({
+    target, 
+    onEditor: (postId) => {
+      history.pushState(null, null, `/documents/${postId}`);
+      postEditPage.setState({postId});
+    }
+  });
+
   const postEditPage = new PostEditPage({
     target,
     initialState: {
