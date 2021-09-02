@@ -33,11 +33,10 @@ export default function Postspage({target, onEditor}) {
     initialState: [],
     onRemove: async postId => {
       postId = Number(postId);
-      const nextState = [...postList.state];
       
-      const findPost = () => {
-        const queue = nextState;
-
+      const findRootOfRemovePosts = () => {
+        const queue = [...postList.state];
+        
         while(queue.length > 0) {
           const curPost = queue.shift();
 
@@ -54,6 +53,7 @@ export default function Postspage({target, onEditor}) {
       const removePosts = async (root) => {
         const queue = [root];
         const removePostIds = [root.id];
+        const toggleIds = getItem('toggleIds', []);
 
         while(queue.length > 0) {
           const curPost = queue.shift();
@@ -65,18 +65,25 @@ export default function Postspage({target, onEditor}) {
             removePostIds.push(post.id);
           });
         }
-        
+
         for(let id of removePostIds) {
+          const toggleIdx = toggleIds.findIndex(toggleId => toggleId === String(id));
+
+          if(toggleIdx) {
+            toggleIds.splice(toggleIdx, 1);
+            setItem('toggleIds', toggleIds);
+          }
+
           await request(`/documents/${id}`, {
             method: 'DELETE'
           });
         }
       }
 
-      const removePostsRoot = findPost();
+      const rootOfRemovePosts = findRootOfRemovePosts();
 
-      removePosts(removePostsRoot);
-      this.setState(nextState);
+      await removePosts(rootOfRemovePosts);
+      await this.setState();
     },
     onAdd: async postId => {
       const toggleIds = getItem('toggleIds', []);
@@ -113,11 +120,10 @@ export default function Postspage({target, onEditor}) {
   this.setState = async () => {
     const posts = await request('/documents');
     const toggleIds = getItem('toggleIds', []);
-    // posts.map(post => {
-    //   post.isToggled = false;
-    // })
-    setItem('posts', posts);
-    setItem('toggleIds', toggleIds);
+
+    if(toggleIds.length === 0) {
+      setItem('toggleIds', toggleIds);
+    }
 
     postList.setState(posts);
 
