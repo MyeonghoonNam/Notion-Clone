@@ -9,7 +9,22 @@ export default function PostEditPage({target, initialState}) {
 
   const editor = new Editor({
     target: page,
-    initialState: initialState.post
+    initialState: initialState.post,
+    onEditing: (post) => {
+      if(timer !== null) {
+        clearTimeout(timer);
+      }
+
+      timer = setTimeout(async () => {
+        await request(`/documents/${post.id}`, {
+          method: 'PUT',
+          body: JSON.stringify({
+            title: post.title,
+            content: post.content
+          })
+        })
+      }, 2000);
+    }
   });
 
   this.setState = async nextState => {

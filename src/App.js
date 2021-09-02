@@ -9,8 +9,8 @@ export default function App({target, initialState}) {
     initialState: {
       postId: '',
       post: {
-        title: '제목 없음',
-        content: '내용 없음',
+        title: '',
+        content: '',
       }
     }
   });
