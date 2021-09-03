@@ -4,45 +4,69 @@ export default function Editor({target, initialState, onEditing}) {
 
   target.appendChild(editor);
 
-  let isInitialize = false;
-
+  editor.innerHTML = /* HTML */ `
+        <input class="editor__title" name="title" type="text" placeholder="제목 없음" autocomplete="off"/>
+        <div class="editor__content" name="content" contenteditable="true" ></div>
+      `
+  
   this.state = initialState;
 
   this.setState = (nextState) => {
     this.state = nextState;
-    const {title, content} = this.state;
-
-    editor.querySelector('.editor__title').value = title ? title : '';
-    editor.querySelector('.editor__content').value = content ? content : '';
-
     this.render();
   }
 
   this.render = () => {
-    if(!isInitialize) {
-      editor.innerHTML = /* HTML */ `
-        <input class="editor__title" name="title" type="text" value="${this.state.title}" ${this.state.title ? '' : 'placeholder="제목 없음"'}/>
-        <textarea class="editor__content" name="content" ${this.state.content ? '' : 'placeholder="내용 없음"'}>${this.state.content}</textarea>
-      `
+    let {title, content} = this.state;
 
-      isInitialize = true;
-    } 
+    // 수정 예정
 
+    // if(content) {
+    //   content.replace(/<div>/g, '<br>');
+    // }
+    // const richContent = content ? content.split('<div>').map(line => {
+    //   if (line.indexOf('# ') === 0) {
+    //     return `<h1>${line.substr(2)}</h1>`;
+    //   } else if (line.indexOf('## ') === 0) {
+    //     return `<h2>${line.substr(3)}</h2>`;
+    //   } else if (line.indexOf('### ') === 0) {
+    //     return `<h3>${line.substr(4)}</h3>`;
+    //   } else if(line.indexOf('<br>') === 0){
+    //     return `<div><br></div>`
+    //   }
+
+    //   return line;
+    // }).join('<br>') :
+    // '';
+    // console.log(richContent);
+
+    editor.querySelector('.editor__title').value = title;
+    editor.querySelector('.editor__content').innerHTML = content;
   }
   
   this.render();
 
-  editor.addEventListener('keyup', e => {
-    const {name} = e.target;
-
-    if(this.state[name] !== undefined) {
-      const nextState = {
+  editor.querySelector('[name=title]').addEventListener('keyup', e => {
+    const nextState = {
         ...this.state,
-        [name]: e.target.value
-      }
-
-      this.setState(nextState);
-      onEditing(this.state);
+        title: e.target.value
     }
+    this.setState(nextState);
+    onEditing(this.state);
   })
+
+  editor.querySelector('[name=content]').addEventListener('keypress', e => {
+    const nextState = {
+        ...this.state,
+        content: e.target.innerHTML
+    }
+
+    this.setState(nextState);
+    onEditing(this.state);
+
+    const selection = window.getSelection();
+
+    selection.selectAllChildren(document.querySelector('[name=content]'));
+    selection.collapseToEnd();
+  });
 }

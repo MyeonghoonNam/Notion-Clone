@@ -30,7 +30,7 @@ export default function App({target, initialState}) {
     const {pathname} = location;
     
     if(pathname === '/') {
-      postsPage.setState();
+      await postsPage.setState();
     } else if(pathname.indexOf('/documents/') === 0) {
       const [, , postId] = pathname.split('/');
 
