@@ -21,6 +21,7 @@ li {
 }
 
 .sidebar {
+  order: 1;
   width: 20%;
   min-width: 250px;
   padding: 1em;
@@ -28,10 +29,12 @@ li {
 }
 
 .content {
+  order: 2;
   width: 80%;
   display: flex;
   justify-content: space-around;
-  margin-top: 10%;
+  padding-top: 10%;
+  overflow-y: scroll;
 }
 
 .editor {
@@ -40,12 +43,17 @@ li {
 
 .editor__title {
   width: 100%;
+  font-size: 38px;
   display: block;
+  border: none;
+  outline: none;
+  margin-bottom: 20px;
 }
 
 .editor__content {
   width: 100%;
   height: 70%;
+  outline: none;
 }
 
 .post__button--toggle {
