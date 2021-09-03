@@ -44,12 +44,12 @@ export default function PostList({target, initialState, onRemove, onAdd, onPostC
           <li class="post__row" data-id="${id}">
             <div class="post__row__items">
               <div class="post__row__items--textbox">
-                <i class="fas fa-caret-right post__button--toggle"></i>
-                ${title ? title : '제목 없음'}
+                <button class="post__button--toggle"><i class="fas fa-caret-right"></i></button>
+                <span>${title ? title : '제목 없음'}</span>
               </div>
               <div class="post__row__items--buttonbox">
-                <button class="post__button--delete">X</button>
                 <button class="post__button--add"><i class="far fa-plus-square"></i></button>
+                <button class="post__button--delete"><i class="far fa-minus-square"></i></button>
               </div>
             </div>
             ${toggleIds.includes(String(id)) ? documents.length ? createdPostList(documents) : '<ul><li>하위 페이지가 없습니다.</li></ul>' : ''}

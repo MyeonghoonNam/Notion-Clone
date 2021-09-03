@@ -45,34 +45,65 @@ button {
   display:flex;
   justify-content: space-between;
   min-height: 27px;
-  align-items: center;
+  /* vertical-align: middle; */
+
+  /* align-items: center; */
   margin-bottom: 5px;
   color: #cccbc7;
 }
 
 .post__row__items--textbox {
-  display: inline-block;
+  display: flex;
   width: 75%;
   overflow: hidden;
-  position: relative;
+  align-items: center;
+
 }
 
 .post__row__items--buttonbox {
-  display: inline-block;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
   width:25%;
   text-align: right;
 }
 
-.post__button--add {
-  width:25px;
-  /* height:25px; */
+.post__button--toggle {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width:20px;
+  height:20px;
 }
 
-.fa-plus-square {
-  font-size: 20px;
-  color: #cccbc7;
-  background-color: none;
+.post__button--add {
+  display:flex;
+  align-items: center;
+  width:20px;
+  height:20px;
+  margin: 0 2.5px;
 }
+
+.post__button--delete {
+  display:flex;
+  align-items: center;
+  width:20px;
+  height:20px;
+  margin: 0 2.5px;
+}
+
+.far, .fas{
+  color: #cccbc7;
+  font-size: 20px;
+}
+
+/* .post__button--toggle {
+  font-size: 20px;
+}
+
+.post__button--toggle:hover {
+  cursor:pointer;
+} */
 
 .content {
   order: 2;
@@ -100,12 +131,4 @@ button {
   width: 100%;
   height: 70%;
   outline: none;
-}
-
-.post__button--toggle {
-  font-size: 20px;
-}
-
-.post__button--toggle:hover {
-  cursor:pointer;
 }
