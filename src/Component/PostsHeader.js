@@ -1,23 +1,19 @@
-export default function PostsHeader({target, initialState, onClick}) {
+export default function PostsHeader({target, onClick}) {
   const postsHeader = document.createElement('div');
-  const postsHeaderText = document.createElement('span');
-  const postsHeaderButton = document.createElement('button');
+  postsHeader.setAttribute('class', 'post__header');
 
-  postsHeader.appendChild(postsHeaderText);
-  postsHeader.appendChild(postsHeaderButton);
-  
   target.appendChild(postsHeader);
  
-  this.state = initialState;
-
   this.render = () => {
-    postsHeaderText.innerText = this.state.headerText;
-    postsHeaderButton.innerText = this.state.buttonText;
+    postsHeader.innerHTML = /* HTML */ `
+      <span>Page List</span>
+      <button class="post__button--add"><i class="far fa-plus-square"></i></button>
+    `
   }
   
   this.render();
 
-  postsHeaderButton.addEventListener('click', () => {
+  postsHeader.querySelector('button').addEventListener('click', () => {
     onClick();
   })
 }

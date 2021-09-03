@@ -2,6 +2,7 @@ import { getItem } from "./storage.js";
 
 export default function PostList({target, initialState, onRemove, onAdd, onPostClick, onToggle}) {
   const postList = document.createElement('div');
+  postList.setAttribute('class', 'post__list');
 
   target.appendChild(postList);
 

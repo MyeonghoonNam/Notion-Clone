@@ -11,10 +11,6 @@ export default function Postspage({target, onEditor}) {
 
   new PostsHeader({
     target: postsPage,
-    initialState: {
-      headerText: 'Page List',
-      buttonText: '+'
-    },
     onClick: async () => {
       const createdPost = await request('/documents', {
         method: 'Post',
