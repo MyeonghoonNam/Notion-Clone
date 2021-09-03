@@ -7,12 +7,19 @@ body {
 }
 
 ul {
-  padding: 0;
+  padding-left: 10px ;
 }
 
 li {
   list-style-type: none;
-  padding: 0 15px;
+}
+
+button {
+  border: none;
+  outline: none;
+  padding: 0px;
+  margin: 0px;
+  background: none;
 }
 
 #app {
@@ -21,11 +28,50 @@ li {
 }
 
 .sidebar {
+  font-size: 14px;
   order: 1;
   width: 20%;
   min-width: 250px;
   padding: 1em;
   background: #f5f4f1;
+}
+
+.post__row {
+  list-style-type: none;
+  /* padding: 0 15px; */
+}
+
+.post__row__items {
+  display:flex;
+  justify-content: space-between;
+  min-height: 27px;
+  align-items: center;
+  margin-bottom: 5px;
+  color: #cccbc7;
+}
+
+.post__row__items--textbox {
+  display: inline-block;
+  width: 75%;
+  overflow: hidden;
+  position: relative;
+}
+
+.post__row__items--buttonbox {
+  display: inline-block;
+  width:25%;
+  text-align: right;
+}
+
+.post__button--add {
+  width:25px;
+  /* height:25px; */
+}
+
+.fa-plus-square {
+  font-size: 20px;
+  color: #cccbc7;
+  background-color: none;
 }
 
 .content {
@@ -57,7 +103,7 @@ li {
 }
 
 .post__button--toggle {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .post__button--toggle:hover {
