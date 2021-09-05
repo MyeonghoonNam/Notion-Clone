@@ -9,8 +9,6 @@ export default function Postspage({ target, onEditor }) {
   const postsPage = document.createElement('nav');
   postsPage.setAttribute('class', 'sidebar');
 
-  const toggleIds = getItem('toggleIds', []);
-
   new PostsHeader({
     target: postsPage,
     onClick: async () => {
@@ -86,9 +84,7 @@ export default function Postspage({ target, onEditor }) {
       await this.setState();
     },
     onAdd: async (postId) => {
-      const toggleIds = getItem('toggleIds', []);
-
-      await request('/documents', {
+      const newPost = await request('/documents', {
         method: 'POST',
         body: JSON.stringify({
           title: '',
@@ -96,8 +92,8 @@ export default function Postspage({ target, onEditor }) {
         }),
       });
 
-      setItem('toggleIds', [...toggleIds, postId]);
-      this.setState();
+      await this.setState();
+      await onEditor(newPost.id);
     },
     onPostClick: (postId) => {
       onEditor(postId);
