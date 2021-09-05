@@ -53,7 +53,13 @@ export default function PostList({
               <li class="post__row" data-id="${id}">
                 <div class="post__row__items" style="padding-left:${postRowItemPadding}px">
                   <div class="post__row__items--textbox">
-                    <button class="post__button--toggle"><i class="fas fa-caret-right"></i></button>
+                    <button class="post__button--toggle">
+                      ${
+                        isToggled
+                          ? `<i class="fas fa-caret-down"></i>`
+                          : `<i class="fas fa-caret-right"></i>`
+                      }
+                    </button>
                     <span class="post__text">${
                       title ? title : '제목 없음'
                     }</span>
