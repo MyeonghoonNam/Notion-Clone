@@ -28,57 +28,7 @@ export default function Postspage({ target, onEditor }) {
     target: postsPage,
     initialState: [],
     onRemove: async (postId) => {
-      postId = Number(postId);
-
-      const findRootOfRemovePosts = () => {
-        const queue = [...postList.state];
-
-        while (queue.length > 0) {
-          const curPost = queue.shift();
-
-          if (curPost.id === postId) {
-            return curPost;
-          }
-
-          curPost.documents.forEach((el) => {
-            queue.push(el);
-          });
-        }
-      };
-
-      const removePosts = async (root) => {
-        const queue = [root];
-        const removePostIds = [root.id];
-        const toggleIds = getItem('toggleIds', []);
-
-        while (queue.length > 0) {
-          const curPost = queue.shift();
-
-          if (curPost.documents.length === 0) continue;
-
-          curPost.documents.forEach((post) => {
-            queue.push(post);
-            removePostIds.push(post.id);
-          });
-        }
-
-        for (let id of removePostIds) {
-          const toggleIdx = toggleIds.findIndex(
-            (toggleId) => toggleId === String(id)
-          );
-
-          if (toggleIdx) {
-            toggleIds.splice(toggleIdx, 1);
-            setItem('toggleIds', toggleIds);
-          }
-
-          await request(`/documents/${id}`, {
-            method: 'DELETE',
-          });
-        }
-      };
-
-      const rootOfRemovePosts = findRootOfRemovePosts();
+      const rootOfRemovePosts = findRootOfRemovePosts(Number(postId));
 
       await removePosts(rootOfRemovePosts);
       await this.setState();
@@ -152,5 +102,53 @@ export default function Postspage({ target, onEditor }) {
     });
 
     return posts;
+  };
+
+  const findRootOfRemovePosts = (postId) => {
+    const queue = [...postList.state];
+
+    while (queue.length > 0) {
+      const curPost = queue.shift();
+
+      if (curPost.id === postId) {
+        return curPost;
+      }
+
+      curPost.documents.forEach((el) => {
+        queue.push(el);
+      });
+    }
+  };
+
+  const removePosts = async (root) => {
+    const queue = [root];
+    const removePostIds = [root.id];
+    const toggleIds = getItem('toggleIds', []);
+
+    while (queue.length > 0) {
+      const curPost = queue.shift();
+
+      if (curPost.documents.length === 0) continue;
+
+      curPost.documents.forEach((post) => {
+        queue.push(post);
+        removePostIds.push(post.id);
+      });
+    }
+
+    for (let id of removePostIds) {
+      const toggleIdx = toggleIds.findIndex(
+        (toggleId) => toggleId === String(id)
+      );
+
+      if (toggleIdx !== -1) {
+        toggleIds.splice(toggleIdx, 1);
+        setItem('toggleIds', toggleIds);
+      }
+
+      await request(`/documents/${id}`, {
+        method: 'DELETE',
+      });
+    }
   };
 }
