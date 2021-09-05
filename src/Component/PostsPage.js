@@ -84,6 +84,12 @@ export default function Postspage({ target, onEditor }) {
       await this.setState();
     },
     onAdd: async (postId) => {
+      const toggleIds = getItem('toggleIds', []);
+
+      if (!toggleIds.includes(postId)) {
+        setItem('toggleIds', [...toggleIds, postId]);
+      }
+
       const newPost = await request('/documents', {
         method: 'POST',
         body: JSON.stringify({
