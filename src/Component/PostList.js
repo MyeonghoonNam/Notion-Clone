@@ -1,5 +1,3 @@
-import { getItem } from './storage.js';
-
 export default function PostList({
   target,
   initialState,
@@ -45,14 +43,13 @@ export default function PostList({
   };
 
   const createdPostList = (documents, postRowItemPadding) => {
-    const toggleIds = getItem('toggleIds', []);
     postRowItemPadding += 10;
 
     return /* html */ `
       <ul>
         ${documents
           .map(
-            ({ id, title, documents }) => /* html */ `
+            ({ id, title, documents, isToggled }) => /* html */ `
               <li class="post__row" data-id="${id}">
                 <div class="post__row__items" style="padding-left:${postRowItemPadding}px">
                   <div class="post__row__items--textbox">
@@ -67,8 +64,8 @@ export default function PostList({
                   </div>
                 </div>
                 ${
-                  toggleIds.includes(String(id))
-                    ? documents.length
+                  isToggled
+                    ? documents.length > 0
                       ? createdPostList(documents, postRowItemPadding)
                       : '<ul><li>하위 페이지가 없습니다.</li></ul>'
                     : ''
