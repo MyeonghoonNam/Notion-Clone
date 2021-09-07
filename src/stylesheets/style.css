@@ -79,11 +79,15 @@ button {
 .post__row__items--textbox {
   display: flex;
   width: 75%;
-  overflow: hidden;
+  /* overflow: hidden; */
   align-items: center;
 }
 
 .post__text {
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   margin-left: 2px;
 }
 
