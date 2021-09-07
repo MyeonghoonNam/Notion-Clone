@@ -1,5 +1,6 @@
 import { request } from './api.js';
 import Editor from './Editor.js';
+import { route } from './router.js';
 
 export default function PostEditPage({
   target,
@@ -39,10 +40,15 @@ export default function PostEditPage({
   });
 
   this.setState = async (nextState) => {
-    const post = await request(`/documents/${nextState.postId}`);
+    try {
+      const post = await request(`/documents/${nextState.postId}`);
 
-    editor.setState(post);
-    this.render();
+      editor.setState(post);
+      this.render();
+    } catch (e) {
+      alert('해당 문서를 찾을 수 없습니다. 메인 페이지로 돌아갑니다.');
+      route('/');
+    }
   };
 
   this.render = () => {
