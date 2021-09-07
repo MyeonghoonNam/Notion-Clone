@@ -49,9 +49,11 @@ export default function PostList({
       <ul>
         ${documents
           .map(
-            ({ id, title, documents, isToggled }) => /* html */ `
+            ({ id, title, documents, isToggled, isSelected }) => /* html */ `
               <li class="post__row" data-id="${id}">
-                <div class="post__row__items" style="padding-left:${postRowItemPadding}px">
+                <div class="post__row__items${
+                  isSelected ? ' post__row__items--selected' : ''
+                }" style="padding-left:${postRowItemPadding}px">
                   <div class="post__row__items--textbox">
                     <button class="post__button--toggle">
                       ${

@@ -53,13 +53,19 @@ button {
   padding: 0 10px;
   justify-content: space-between;
   min-height: 27px;
-  margin-bottom: 5px;
   color: #cccbc7;
   cursor:pointer;
 }
 
 .post__row__items:hover {
   background: rgba(55, 53, 47, 0.08);
+  color:black;
+}
+
+.post__row__items--selected, 
+.post__row__items--selected:hover  {
+  background: rgba(55, 53, 47, 0.15);
+  /* background: rgba(55, 53, 47, 0.20); */
   color:black;
 }
 
@@ -91,7 +97,7 @@ button {
   width:20px;
   height:20px;
   cursor:pointer;
-  color: #cccbc7;
+  color: #aca99e;
   font-size: 20px;
   transition: transform 200ms ease-in;
 }
