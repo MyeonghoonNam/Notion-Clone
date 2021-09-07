@@ -12,7 +12,7 @@ export default function Postspage({ target, onEditor }) {
   new PostsHeader({
     target: postsPage,
     onClick: async () => {
-      const createdPost = await request('/documents', {
+      const newPost = await request('/documents', {
         method: 'Post',
         body: JSON.stringify({
           title: '',
@@ -20,7 +20,9 @@ export default function Postspage({ target, onEditor }) {
         }),
       });
 
-      route(`/documents/${createdPost.id}`);
+      setItem('selectId', [String(newPost.id)]);
+      await this.setState();
+      await onEditor(newPost.id);
     },
   });
 
