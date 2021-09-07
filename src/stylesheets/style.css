@@ -27,8 +27,19 @@ button {
   order: 1;
   width: 20%;
   min-width: 260px;
-  padding: 1em 0;
+  padding: 5em 0;
   background: #f5f4f1;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.icon {
+  width: 50%;
+  border-radius: 5px;
 }
 
 .post__header {

@@ -9,6 +9,17 @@ export default function Postspage({ target, onChangeEditor }) {
   const postsPage = document.createElement('nav');
   postsPage.setAttribute('class', 'sidebar');
 
+  const iconBox = document.createElement('div');
+  iconBox.setAttribute('class', 'iconContainer');
+
+  const icon = new Image();
+  icon.setAttribute('class', 'icon');
+  icon.src =
+    'https://user-images.githubusercontent.com/57757719/132363354-285c06cc-9d3e-49ea-8b46-3e3a99f0717d.png';
+
+  iconBox.appendChild(icon);
+  postsPage.appendChild(iconBox);
+
   new PostsHeader({
     target: postsPage,
     onClick: async () => {
