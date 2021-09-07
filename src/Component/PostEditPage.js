@@ -1,7 +1,7 @@
-import { request } from "./api.js";
-import Editor from "./Editor.js";
+import { request } from './api.js';
+import Editor from './Editor.js';
 
-export default function PostEditPage({target, initialState}) {
+export default function PostEditPage({ target, initialState }) {
   const page = document.createElement('main');
   page.setAttribute('class', 'content');
 
@@ -11,7 +11,7 @@ export default function PostEditPage({target, initialState}) {
     target: page,
     initialState: initialState.post,
     onEditing: (post) => {
-      if(timer !== null) {
+      if (timer !== null) {
         clearTimeout(timer);
       }
 
@@ -20,24 +20,23 @@ export default function PostEditPage({target, initialState}) {
           method: 'PUT',
           body: JSON.stringify({
             title: post.title,
-            content: post.content
-          })
-        })
-      }, 2000);
-    }
+            content: post.content,
+          }),
+        });
+      }, 1000);
+    },
   });
 
-  this.setState = async nextState => {
+  this.setState = async (nextState) => {
     const post = await request(`/documents/${nextState.postId}`);
 
     editor.setState(post);
     this.render();
-  }
+  };
 
   this.render = () => {
     target.appendChild(page);
-  }
+  };
 
   this.render();
-
 }
