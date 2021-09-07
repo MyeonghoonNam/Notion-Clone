@@ -79,7 +79,6 @@ button {
 .post__row__items--textbox {
   display: flex;
   width: 75%;
-  /* overflow: hidden; */
   align-items: center;
 }
 
@@ -114,7 +113,7 @@ button {
 }
 
 .post__button--toggle:hover {
-  border: solid 1px #cccbc7;
+  border: solid 1px #aca99e;
   border-radius: 2px;
   color:black;
 }
