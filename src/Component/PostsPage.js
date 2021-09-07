@@ -41,7 +41,7 @@ export default function Postspage({ target, onChangeEditor }) {
 
       await removePosts(rootOfRemovePosts);
       await this.setState();
-      await route('/');
+      route('/');
     },
     onAdd: async (postId) => {
       const toggleIds = getItem('toggleIds', []);

@@ -1,6 +1,6 @@
 import Postspage from './Component/PostsPage.js';
 import PostEditPage from './Component/PostEditPage.js';
-import { initRouter } from './Component/router.js';
+import { initRouter, route } from './Component/router.js';
 import { setItem } from './Component/storage.js';
 
 export default function App({ target, initialState }) {
@@ -43,9 +43,13 @@ export default function App({ target, initialState }) {
       await postsPage.setState();
     } else if (pathname.indexOf('/documents/') === 0) {
       const [, , postId] = pathname.split('/');
+      setItem('selectId', [postId]);
 
       await postsPage.setState();
       await postEditPage.setState({ postId });
+    } else {
+      await postsPage.setState();
+      route('/');
     }
   };
 
