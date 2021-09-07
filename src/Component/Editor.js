@@ -1,6 +1,15 @@
-export default function Editor({ target, initialState, onEditing }) {
+export default function Editor({
+  target,
+  initialState,
+  onEditing,
+  onClickSubDocument,
+}) {
   const editor = document.createElement('section');
   editor.setAttribute('class', 'editor');
+
+  const editorDocuments = document.createElement('div');
+  editorDocuments.setAttribute('class', 'editor__documents');
+
   let isInit = false;
 
   target.appendChild(editor);
@@ -16,7 +25,7 @@ export default function Editor({ target, initialState, onEditing }) {
   };
 
   this.render = () => {
-    let { title, content } = this.state;
+    let { title, content, documents } = this.state;
 
     if (!isInit) {
       editor.innerHTML = /* HTML */ `
@@ -31,14 +40,21 @@ export default function Editor({ target, initialState, onEditing }) {
           class="editor__content"
           name="content"
           contenteditable="true"
+          placeholder="내용을 입력해주세요."
         ></div>
       `;
+
+      editor.appendChild(editorDocuments);
 
       isInit = true;
     }
 
-    editor.querySelector('.editor__title').value = title;
-    editor.querySelector('.editor__content').innerHTML = content;
+    const editorTitle = editor.querySelector('.editor__title');
+    const editorContent = editor.querySelector('.editor__content');
+
+    editorTitle.value = title;
+    editorContent.innerHTML = content;
+    editorDocuments.innerHTML = createSubDocuments(documents);
   };
 
   editor.addEventListener('keyup', (e) => {
@@ -73,6 +89,15 @@ export default function Editor({ target, initialState, onEditing }) {
 
       // 현재 커서 정보에 대한 렌더링이 필요하지 않으며 editor의 상태는 업데이트 한다.
       this.setState(nextState, false);
+    }
+  });
+
+  editorDocuments.addEventListener('click', (e) => {
+    const post = e.target.closest('div');
+    const postId = post.dataset.id;
+
+    if (post) {
+      onClickSubDocument(postId);
     }
   });
 
@@ -119,5 +144,20 @@ export default function Editor({ target, initialState, onEditing }) {
 
     //생성된 태그의 가정 첫 번째로 커서를 이동시킨다.
     window.getSelection().collapse(tag, 0);
+  };
+
+  const createSubDocuments = (documents) => {
+    return /* html */ `
+      ${documents
+        .map(
+          ({ id }) => /* html */ `
+          <div class="editor__document" contenteditable="false" data-id="${id}">
+            <i class="far fa-file"></i>
+            <span class="editor__document--title">${id}</span>
+          </div>
+        `
+        )
+        .join('')}
+    `;
   };
 }

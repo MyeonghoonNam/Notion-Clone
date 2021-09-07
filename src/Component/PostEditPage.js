@@ -1,7 +1,11 @@
 import { request } from './api.js';
 import Editor from './Editor.js';
 
-export default function PostEditPage({ target, initialState, onChangeTitle }) {
+export default function PostEditPage({
+  target,
+  initialState,
+  onChangeSidebar,
+}) {
   const page = document.createElement('main');
   page.setAttribute('class', 'content');
 
@@ -24,8 +28,12 @@ export default function PostEditPage({ target, initialState, onChangeTitle }) {
           }),
         });
 
-        await onChangeTitle();
+        await onChangeSidebar(postId);
       }, 1000);
+    },
+    onClickSubDocument: async (postId) => {
+      await this.setState({ postId });
+      await onChangeSidebar(postId);
     },
   });
 

@@ -1,6 +1,7 @@
 import Postspage from './Component/PostsPage.js';
 import PostEditPage from './Component/PostEditPage.js';
 import { initRouter } from './Component/router.js';
+import { setItem } from './Component/storage.js';
 
 export default function App({ target, initialState }) {
   const postsPage = new Postspage({
@@ -20,7 +21,9 @@ export default function App({ target, initialState }) {
         content: '',
       },
     },
-    onChangeTitle: () => {
+    onChangeSidebar: (postId) => {
+      setItem('selectId', [postId]);
+      history.pushState(null, null, `/documents/${postId}`);
       postsPage.setState();
     },
   });
@@ -33,6 +36,7 @@ export default function App({ target, initialState }) {
     const { pathname } = location;
 
     if (pathname === '/') {
+      setItem('selectId', []);
       await postsPage.setState();
     } else if (pathname.indexOf('/documents/') === 0) {
       const [, , postId] = pathname.split('/');
