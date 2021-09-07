@@ -53,6 +53,8 @@ export default function Postspage({ target, onEditor }) {
       await onEditor(newPost.id);
     },
     onPostClick: (postId) => {
+      setItem('selectId', [postId]);
+      this.setState();
       onEditor(postId);
     },
     onToggle: (postId) => {
@@ -73,12 +75,17 @@ export default function Postspage({ target, onEditor }) {
   this.setState = async () => {
     const posts = await request('/documents');
     const toggleIds = getItem('toggleIds', []);
+    const selectId = getItem('selectId', []);
 
     if (toggleIds.length === 0) {
       setItem('toggleIds', toggleIds);
     }
 
-    const updateState = updatePostsState(posts, toggleIds);
+    if (selectId.length === 0) {
+      setItem('selectId', selectId);
+    }
+
+    const updateState = updatePostsState(posts, toggleIds, selectId);
 
     postList.setState(updateState);
 
@@ -89,14 +96,20 @@ export default function Postspage({ target, onEditor }) {
     target.appendChild(postsPage);
   };
 
-  const updatePostsState = (posts, toggleIds) => {
+  const updatePostsState = (posts, toggleIds, selectId) => {
     posts.forEach((post) => {
       if (post.documents.length > 0) {
-        updatePostsState(post.documents, toggleIds);
+        updatePostsState(post.documents, toggleIds, selectId);
       }
 
       post.isToggled = toggleIds
         ? toggleIds.includes(String(post.id))
+          ? true
+          : false
+        : false;
+
+      post.isSelected = selectId
+        ? selectId.includes(String(post.id))
           ? true
           : false
         : false;
