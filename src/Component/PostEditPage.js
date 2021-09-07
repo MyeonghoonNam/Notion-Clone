@@ -1,7 +1,7 @@
 import { request } from './api.js';
 import Editor from './Editor.js';
 
-export default function PostEditPage({ target, initialState }) {
+export default function PostEditPage({ target, initialState, onChangeTitle }) {
   const page = document.createElement('main');
   page.setAttribute('class', 'content');
 
@@ -23,6 +23,8 @@ export default function PostEditPage({ target, initialState }) {
             content: post.content,
           }),
         });
+
+        await onChangeTitle();
       }, 1000);
     },
   });

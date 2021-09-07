@@ -1,14 +1,14 @@
-import Postspage from "./Component/PostsPage.js";
-import PostEditPage from "./Component/PostEditPage.js";
-import { initRouter } from "./Component/router.js";
+import Postspage from './Component/PostsPage.js';
+import PostEditPage from './Component/PostEditPage.js';
+import { initRouter } from './Component/router.js';
 
-export default function App({target, initialState}) {
+export default function App({ target, initialState }) {
   const postsPage = new Postspage({
-    target, 
+    target,
     onEditor: (postId) => {
       history.pushState(null, null, `/documents/${postId}`);
-      postEditPage.setState({postId});
-    }
+      postEditPage.setState({ postId });
+    },
   });
 
   const postEditPage = new PostEditPage({
@@ -18,26 +18,29 @@ export default function App({target, initialState}) {
       post: {
         title: '',
         content: '',
-      }
-    }
+      },
+    },
+    onChangeTitle: () => {
+      postsPage.setState();
+    },
   });
 
   this.state = initialState;
 
   this.route = async () => {
     target.innerHTML = '';
-    
-    const {pathname} = location;
-    
-    if(pathname === '/') {
+
+    const { pathname } = location;
+
+    if (pathname === '/') {
       await postsPage.setState();
-    } else if(pathname.indexOf('/documents/') === 0) {
+    } else if (pathname.indexOf('/documents/') === 0) {
       const [, , postId] = pathname.split('/');
 
       await postsPage.setState();
-      await postEditPage.setState({postId});
+      await postEditPage.setState({ postId });
     }
-  }
+  };
 
   this.route();
   initRouter(() => this.route());
