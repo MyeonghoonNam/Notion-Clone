@@ -29,6 +29,13 @@ export default function Postspage({ target, onEditor }) {
     initialState: [],
     onRemove: async (postId) => {
       const rootOfRemovePosts = findRootOfRemovePosts(Number(postId));
+      const selectId = getItem('selectId', []);
+
+      if (selectId.length > 0) {
+        if (selectId[0] === postId) {
+          setItem('selectId', []);
+        }
+      }
 
       await removePosts(rootOfRemovePosts);
       await this.setState();
@@ -49,8 +56,9 @@ export default function Postspage({ target, onEditor }) {
         }),
       });
 
-      await this.setState();
+      setItem('selectId', [String(newPost.id)]);
       await onEditor(newPost.id);
+      await this.setState();
     },
     onPostClick: (postId) => {
       setItem('selectId', [postId]);
@@ -138,9 +146,16 @@ export default function Postspage({ target, onEditor }) {
     const queue = [root];
     const removePostIds = [root.id];
     const toggleIds = getItem('toggleIds', []);
+    const selectId = getItem('selectId', []);
 
     while (queue.length > 0) {
       const curPost = queue.shift();
+
+      if (selectId.length > 0) {
+        if (selectId[0] === String(curPost.id)) {
+          setItem('selectId', []);
+        }
+      }
 
       if (curPost.documents.length === 0) continue;
 
