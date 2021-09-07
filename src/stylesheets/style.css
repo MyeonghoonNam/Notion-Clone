@@ -47,6 +47,14 @@ button {
   list-style-type: none;
 }
 
+.post__row--none {
+  width:inherit;
+  line-height: 27px;
+  min-height: 27px;
+  color: #cccbc7;
+  cursor:default;
+}
+
 .post__row__items {
   width:inherit;
   display:flex;
@@ -65,7 +73,6 @@ button {
 .post__row__items--selected, 
 .post__row__items--selected:hover  {
   background: rgba(55, 53, 47, 0.15);
-  /* background: rgba(55, 53, 47, 0.20); */
   color:black;
 }
 

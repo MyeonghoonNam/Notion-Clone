@@ -28,7 +28,7 @@ export default function PostList({
       const post = clickElement.closest('li');
       const postId = post.dataset.id;
 
-      if (post) {
+      if (post.className !== 'post__row--none') {
         if (className === 'post__button--delete') {
           onRemove(postId);
         } else if (className === 'post__button--add') {
@@ -70,12 +70,16 @@ export default function PostList({
                     <button class="post__button--add"><i class="far fa-plus-square"></i></button>
                     <button class="post__button--delete"><i class="far fa-minus-square"></i></button>
                   </div>
-                </div>
+                  </div>
                 ${
                   isToggled
                     ? documents.length > 0
                       ? createdPostList(documents, postRowItemPadding)
-                      : '<ul><li>하위 페이지가 없습니다.</li></ul>'
+                      : `<ul>
+                          <li class="post__row--none" style="padding-left:${postRowItemPadding}px">
+                            하위 페이지가 없습니다.
+                          </li>
+                        </ul>`
                     : ''
                 }
               </li>`
