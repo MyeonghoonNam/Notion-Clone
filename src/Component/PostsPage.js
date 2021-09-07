@@ -5,7 +5,7 @@ import { route } from './router.js';
 import { setItem } from './storage.js';
 import { getItem } from './storage.js';
 
-export default function Postspage({ target, onEditor }) {
+export default function Postspage({ target, onChangeEditor }) {
   const postsPage = document.createElement('nav');
   postsPage.setAttribute('class', 'sidebar');
 
@@ -22,7 +22,7 @@ export default function Postspage({ target, onEditor }) {
 
       setItem('selectId', [String(newPost.id)]);
       await this.setState();
-      await onEditor(newPost.id);
+      await onChangeEditor(newPost.id);
     },
   });
 
@@ -59,13 +59,13 @@ export default function Postspage({ target, onEditor }) {
       });
 
       setItem('selectId', [String(newPost.id)]);
-      await onEditor(newPost.id);
+      await onChangeEditor(newPost.id);
       await this.setState();
     },
     onPostClick: (postId) => {
       setItem('selectId', [postId]);
       this.setState();
-      onEditor(postId);
+      onChangeEditor(postId);
     },
     onToggle: (postId) => {
       const toggleIds = getItem('toggleIds', []);

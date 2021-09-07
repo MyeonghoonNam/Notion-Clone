@@ -6,7 +6,7 @@ import { setItem } from './Component/storage.js';
 export default function App({ target, initialState }) {
   const postsPage = new Postspage({
     target,
-    onEditor: (postId) => {
+    onChangeEditor: (postId) => {
       history.pushState(null, null, `/documents/${postId}`);
       postEditPage.setState({ postId });
     },
@@ -21,9 +21,12 @@ export default function App({ target, initialState }) {
         content: '',
       },
     },
-    onChangeSidebar: (postId) => {
+    onClickSubDocument: (postId) => {
       setItem('selectId', [postId]);
       history.pushState(null, null, `/documents/${postId}`);
+      postsPage.setState();
+    },
+    onChangeEditorTitle: () => {
       postsPage.setState();
     },
   });

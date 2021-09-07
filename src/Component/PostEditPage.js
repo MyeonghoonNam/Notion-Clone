@@ -4,7 +4,8 @@ import Editor from './Editor.js';
 export default function PostEditPage({
   target,
   initialState,
-  onChangeSidebar,
+  onClickSubDocument,
+  onChangeEditorTitle,
 }) {
   const page = document.createElement('main');
   page.setAttribute('class', 'content');
@@ -28,12 +29,12 @@ export default function PostEditPage({
           }),
         });
 
-        await onChangeSidebar(postId);
+        await onChangeEditorTitle();
       }, 1000);
     },
     onClickSubDocument: async (postId) => {
       await this.setState({ postId });
-      await onChangeSidebar(postId);
+      await onClickSubDocument(postId);
     },
   });
 
