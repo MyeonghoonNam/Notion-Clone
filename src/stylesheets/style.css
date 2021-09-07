@@ -10,7 +10,6 @@ ul {
   padding: 0;
 }
 
-
 button {
   border: none;
   outline: none;
@@ -33,7 +32,7 @@ button {
 }
 
 .post__header {
-  display:flex;
+  display: flex;
   font-size: 18px;
   justify-content: space-between;
   align-items: center;
@@ -48,32 +47,32 @@ button {
 }
 
 .post__row--none {
-  width:inherit;
+  width: inherit;
   line-height: 27px;
   min-height: 27px;
   color: #cccbc7;
-  cursor:default;
+  cursor: default;
 }
 
 .post__row__items {
-  width:inherit;
-  display:flex;
+  width: inherit;
+  display: flex;
   padding: 0 10px;
   justify-content: space-between;
   min-height: 27px;
   color: #cccbc7;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .post__row__items:hover {
   background: rgba(55, 53, 47, 0.08);
-  color:black;
+  color: black;
 }
 
-.post__row__items--selected, 
-.post__row__items--selected:hover  {
+.post__row__items--selected,
+.post__row__items--selected:hover {
   background: rgba(55, 53, 47, 0.15);
-  color:black;
+  color: black;
 }
 
 .post__row__items--textbox {
@@ -94,19 +93,19 @@ button {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  width:25%;
+  width: 25%;
   text-align: right;
 }
 
 .post__button--toggle,
 .post__button--add,
 .post__button--delete {
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  width:20px;
-  height:20px;
-  cursor:pointer;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
   color: #aca99e;
   font-size: 20px;
   transition: transform 200ms ease-in;
@@ -115,12 +114,12 @@ button {
 .post__button--toggle:hover {
   border: solid 1px #aca99e;
   border-radius: 2px;
-  color:black;
+  color: black;
 }
 
 .post__button--add:hover,
 .post__button--delete:hover {
-  color:black;
+  color: black;
   transform: scale(1.1);
 }
 
@@ -130,9 +129,7 @@ button {
   display: flex;
   justify-content: space-around;
   padding-top: 10%;
-  overflow:auto;
-  overflow-y:hidden"
-
+  overflow: auto;
 }
 
 .editor {
@@ -150,6 +147,20 @@ button {
 
 .editor__content {
   width: 100%;
-  height: 70%;
+  /* height: 70%; */
   outline: none;
+}
+
+.editor__document {
+  font-size: 24px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.editor__document:hover {
+  background: rgba(55, 53, 47, 0.08);
+}
+
+.editor__document--title {
+  border-bottom: 1px solid rgba(55, 53, 47, 0.16);
 }
