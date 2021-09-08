@@ -147,7 +147,6 @@ export default function Editor({
   };
 
   const createSubDocuments = (documents) => {
-    console.log(documents);
     return /* html */ `
       ${documents
         .map(
