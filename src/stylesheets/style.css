@@ -6,6 +6,11 @@ body {
   margin: 0;
 }
 
+div:empty:before {
+  content: attr(placeholder);
+  color: gray;
+}
+
 ul {
   padding: 0;
 }
@@ -158,7 +163,7 @@ button {
 
 .editor__content {
   width: 100%;
-  /* height: 70%; */
+  height: 20%;
   outline: none;
 }
 
