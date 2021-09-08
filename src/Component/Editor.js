@@ -147,13 +147,16 @@ export default function Editor({
   };
 
   const createSubDocuments = (documents) => {
+    console.log(documents);
     return /* html */ `
       ${documents
         .map(
-          ({ id }) => /* html */ `
+          ({ id, title }) => /* html */ `
           <div class="editor__document" contenteditable="false" data-id="${id}">
             <i class="far fa-file"></i>
-            <span class="editor__document--title">${id}</span>
+            <span class="editor__document--title">${
+              title ? title : '제목 없음'
+            }</span>
           </div>
         `
         )
